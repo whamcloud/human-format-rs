@@ -83,6 +83,11 @@ test_suite! {
             .parse("1.00 k"), 1000.0);
     }
 
+    test should_allow_try_parsing_to_f64() {
+        assert_eq!(Formatter::new()
+            .try_parse("1.00 M"), Ok(1000000.0));
+    }
+
     test should_allow_parsing_binary_values_to_f64() {
         assert_eq!(Formatter::new()
             .with_scales(Scales::Binary())
@@ -94,5 +99,24 @@ test_suite! {
             .with_scales(Scales::Binary())
             .with_units("B")
             .parse("1.00 KiB"), 1024.0);
+    }
+
+    test should_allow_try_parsing_binary_values_with_units_to_f64() {
+        assert_eq!(Formatter::new()
+            .with_scales(Scales::Binary())
+            .with_units("B")
+            .try_parse("1.00 KiB"), Ok(1024.0));
+    }
+
+    test try_parse_explicit_suffix_and_unit() {
+        assert_eq!(Formatter::new()
+                   .with_units("m")
+                   .try_parse("1.024Mm"), Ok(1024000.0));
+    }
+
+    test try_parse_explicit_suffix_and_unitless() {
+        assert_eq!(Formatter::new()
+                   .with_units("m")
+                   .try_parse("1.024K"), Ok(1024.0));
     }
 }
