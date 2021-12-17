@@ -125,6 +125,12 @@ test_suite! {
     test try_parse_explicit_suffix_and_unitless() {
         assert_eq!(Formatter::new()
                    .with_units("m")
-                   .try_parse("1.024K"), Ok(1024.0));
+                   .try_parse("1.024M"), Ok(1024000.0));
+    }
+
+    test try_parse_very_large_value() {
+        assert_eq!(Formatter::new()
+                   .with_units("B")
+                   .try_parse("2PB"), Ok(2_000_000_000_000_000.0));
     }
 }
