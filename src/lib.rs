@@ -249,6 +249,10 @@ impl Scales {
 
         self
     }
+    /// Get the suffixes for this [`Scale`].
+    pub fn get_suffixes(&self) -> &[String] {
+        self.suffixes.as_slice()
+    }
 
     fn try_get_magnitude_multiplier(&self, value: &str) -> Result<f64, String> {
         self.suffixes
